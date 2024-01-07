@@ -124,7 +124,6 @@ router.post(
 router.post("/api/user/login", async (req, res) => {
   try {
     const existingUsers = await Users.find()
-    console.log("users" + existingUsers)
     const found = existingUsers.find((user) => user.email == req.body.email);
 
     if (!found) {
@@ -133,7 +132,9 @@ router.post("/api/user/login", async (req, res) => {
       return res.send(JSON.stringify({"success": false, "token": "wrong password"}))
     }
 
+
     const token = jwt.sign({email: req.body.email}, process.env.SECRET)
+    console.log(token)
     res.send(JSON.stringify({
       "success": true,
       "token": token
