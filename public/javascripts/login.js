@@ -4,7 +4,7 @@ async function login() {
     const emailInput = document.getElementById("EmailInput").value
     const passwordInput = document.getElementById("PasswordInput").value
 
-    const res = await fetch("/api/user/login", {
+    fetch("/api/user/login", {
         method: "POST",
         headers: {
             "Content-Type":"application/json"
@@ -14,11 +14,14 @@ async function login() {
            password: passwordInput 
         })
     })
-    const data = res.json()
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        if (data.success) {
+            localStorage.setItem("auth_token", data.token)
+        }
+    })
 
-    if (data.success) {
-        localStorage.setItem("auth_token", data.token)
-    }
     console.log(localStorage.getItem("auth_token"))
 
     fetch("/", {
