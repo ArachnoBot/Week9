@@ -62,8 +62,7 @@ const isAuthenticated = (req, res, next) => {
 }
 
 router.get("/", (req, res) => {
-  console.log(req.user)
-  res.render("index", {user: req.user})
+  res.render("index")
 })
 
 router.get('/register.html', (req, res) => {
@@ -125,6 +124,7 @@ router.post(
 router.post("/api/user/login", async (req, res) => {
   try {
     const existingUsers = await Users.find()
+    console.log("users" + existingUsers)
     const found = existingUsers.find((user) => user.email == req.body.email);
 
     if (!found) {
